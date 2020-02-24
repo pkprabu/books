@@ -1,0 +1,19 @@
+<div class="home-bg-img">
+<div class="container home-form-bg p-5 mb-5">
+    <div class="row">
+        <div class="col-sm-8 col-md-6 col-lg-6 offset-sm-2 offset-md-2 offset-lg-3">
+            <form #f="ngForm" (ngSubmit)="getSingleBook(f);f.reset()">
+                <div class="form-group">
+                    <input ngModel name="bookName" #bookName="ngModel" type="text" class="form-control form-control-lg"
+                        placeholder="Get your favorate books." required>
+                </div>
+                <div class="text-center">
+                    <button [routerLink]="['/search', f.value.bookName | url]" type="submit"
+                        [title]="(f.invalid) ? 'Button Disabled' : ''" class="btn btn-outline-success"
+                        [disabled]="f.invalid">Search Books</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
