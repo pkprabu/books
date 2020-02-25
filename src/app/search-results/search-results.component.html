@@ -1,12 +1,18 @@
-<nav class="navbar navbar-expand-sm bg-dark fixed-top">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="navbar-link" (click)="back()"><i class="fas fa-arrow-left"></i> Back to Search</a>
+            <a class="nav-link" (click)="back()"><i class="fas fa-arrow-left"></i> Back to Search</a>
         </li>
     </ul>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="navbar-link"><i class="fas fa-filter"></i></a>
+            <a class="nav-link" (click)="forSale(booksC)">For Sale</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="free(booksC)">Free</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="readOnly(booksC)">Read Only</a>
         </li>
     </ul>
 </nav>
@@ -19,7 +25,7 @@
 <div class="search-results">
     <div class="container">
         <div class="row mt-4 mb-5">
-            <div class="col-sm-6 mb-3" *ngFor="let book of books.items">
+            <div class="col-sm-6 mb-3" *ngFor="let book of books">
                 <div class="card">
                     <div class="card-body">
                         <div class="media">
@@ -38,7 +44,7 @@
                                 <div class="text-right">
                                     <p class="sale mb-0" *ngIf="book.saleInfo.saleability === 'FOR_SALE'">
                                         {{book.saleInfo.listPrice.amount | currency:'INR':'symbol'}}</p>
-                                    <p class="sale mb-0" *ngIf="book.saleInfo.saleability === 'NOT_FOR_SALE'">Not For Sale
+                                    <p class="sale mb-0" *ngIf="book.saleInfo.saleability === 'NOT_FOR_SALE'">Read
                                     </p>
                                     <p class="sale mb-0" *ngIf="book.saleInfo.saleability === 'FREE'">Free</p>
                                 </div>

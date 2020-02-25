@@ -8,9 +8,10 @@ import { BookService } from '../services/book.service';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-public searchQuery;
-public noImage = 'https://dummyimage.com/200X200/cccccc/000000&text=No+Image';
-public books: any = [];
+  public searchQuery;
+  public noImage = 'https://dummyimage.com/200X200/cccccc/000000&text=No+Image';
+  public books: any = [];
+  public booksC = [...this.books];
   constructor(private route: ActivatedRoute, private bookService: BookService, private router: Router) { }
 
   ngOnInit() {
@@ -19,8 +20,8 @@ public books: any = [];
     });
 
     this.bookService.getSingle(this.searchQuery).subscribe((books: any) => {
-      this.books = books;
-      console.log(books);
+      this.books = books.items;
+      console.log(books.items);
     });
   }
 
@@ -28,4 +29,28 @@ public books: any = [];
     this.router.navigate(['/']);
   }
 
+  forSale(books: any[]) {
+    this.books = books.filter( sale => {
+      if (sale.saleInfo.saleability === 'FOR_SALE') {
+        return sale;
+      }
+    });
+    console.log(this.books);
+  }
+  free(books: any[]) {
+    this.books = books.filter( freeBooks => {
+      if (freeBooks.saleInfo.saleability === 'FREE') {
+        return freeBooks;
+      }
+    });
+    console.log(this.books);
+  }
+  readOnly(books: any[]) {
+    this.books = books.filter( notForSale => {
+      if (notForSale.saleInfo.saleability === 'NOT_FOR_SALE') {
+        return notForSale;
+      }
+    });
+    console.log(this.books);
+  }
 }

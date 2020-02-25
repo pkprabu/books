@@ -9,7 +9,6 @@ export class StarPipe implements PipeTransform {
         for (let i = 0; i < value; i++) {
             row += `<i class="fas fa-star ratings"></i>`;
         }
-        console.log(row);
         return row;
     }
 }
