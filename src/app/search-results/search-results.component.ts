@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../services/book.service';
+import { AppError } from 'common/app-specific-errors/app-error';
+import { NotFound } from 'common/app-specific-errors/not-found';
 
 @Component({
   selector: 'app-search-results',
@@ -21,7 +23,11 @@ export class SearchResultsComponent implements OnInit {
 
     this.bookService.getSingle(this.searchQuery).subscribe((books: any) => {
       this.books = books.items;
-      console.log(books.items);
+      // console.log(this.books);
+    }, (error: AppError) => {
+      if (error instanceof NotFound) {
+        console.log(error);
+      } else { throw error; }
     });
   }
 
@@ -29,13 +35,14 @@ export class SearchResultsComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  forSale(books: any[]) {
-    this.books = books.filter( sale => {
-      if (sale.saleInfo.saleability === 'FOR_SALE') {
-        return sale;
-      }
+  /* forSale() {
+    this.bookService.get().subscribe((books: any) => {
+      const pk = books.items.filter(res => {
+        return res.saleInfo.saleability === 'FOR_SALE';
+      });
+      this.books = pk;
+      console.log(pk);
     });
-    console.log(this.books);
   }
   free(books: any[]) {
     this.books = books.filter( freeBooks => {
@@ -51,6 +58,5 @@ export class SearchResultsComponent implements OnInit {
         return notForSale;
       }
     });
-    console.log(this.books);
-  }
+  } */
 }
